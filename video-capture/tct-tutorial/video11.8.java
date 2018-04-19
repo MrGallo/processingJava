@@ -78,7 +78,7 @@ void setup() {
   size(640, 480);
   //String[] cameras = Capture.list();
   //printArray(cameras);
-  video = new Capture(this, "name=/dev/video0,size=640x480,fps=30");
+  video = new Capture(this, "name=Microsoft LifeCam Front,size=640x480,fps=30");
   video.start();
   // start off tracking for red
   trackColor = color(255, 0, 0);
@@ -93,17 +93,18 @@ void draw() {
   image(video, 0, 0);
   
   blobs.clear();
-  threshold = 80;
   
   // begin loop through every pixel
   for (int x = 0; x < video.width; x++) {
     for (int y = 0; y < video.height; y++) {
       int loc = x + y*video.width;
+      
       // what is current color
       color currentColor = video.pixels[loc];
       float r1 = red(currentColor);
       float g1 = green(currentColor);
       float b1 = blue(currentColor);
+      
       float r2 = red(trackColor);
       float g2 = green(trackColor);
       float b2 = blue(trackColor);
@@ -125,9 +126,7 @@ void draw() {
           Blob b = new Blob(x, y);
           blobs.add(b);
         }
-        
       }
-      
     }
   }
 
@@ -161,5 +160,3 @@ void keyPressed() {
   }
   println(distThreshold);
 }
-
-
